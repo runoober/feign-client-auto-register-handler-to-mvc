@@ -15,12 +15,14 @@ public @interface EnableFeignAutoHandlerRegister {
 
     /**
      * basePackages 的别名属性
+     *
      * @return
      */
     String[] value() default {};
 
     /**
      * FeignClient 注解的基础包扫描路径
+     *
      * @return
      */
     String[] basePackages() default {};

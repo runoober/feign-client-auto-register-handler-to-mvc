@@ -26,6 +26,7 @@ public class FeignReturnValueWebMvcConfigurer implements BeanFactoryAware, Initi
         }
     }
 
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         if (this.beanFactory == null) {
@@ -41,10 +42,10 @@ public class FeignReturnValueWebMvcConfigurer implements BeanFactoryAware, Initi
             List<HandlerMethodReturnValueHandler> returnValueHandlers = ClassUtil.invokeNoParameterMethod(configurationSupportClass, webMvcConfigurationSupport, "getReturnValueHandlers");
             List<HandlerMethodArgumentResolver> argumentResolverHandlers = ClassUtil.invokeNoParameterMethod(configurationSupportClass, webMvcConfigurationSupport, "getArgumentResolvers");
 
-            //将所有返回值都当作 @ResponseBody 注解进行处理
+            // 将所有返回值都当作 @ResponseBody 注解进行处理
             returnValueHandlers.add(new FeignRequestResponseBodyMethodProcessor(messageConverters));
 
-            //因为接口中的注解无法识别，所以需要设置对应的注解 ArgumentResolver
+            // 因为接口中的注解无法识别，所以需要设置对应的注解 ArgumentResolver
             argumentResolverHandlers.add(new FeignExpressionValueMethodArgumentResolver(this.beanFactory));
             argumentResolverHandlers.add(new FeignMatrixVariableMapMethodArgumentResolver());
             argumentResolverHandlers.add(new FeignMatrixVariableMethodArgumentResolver());
@@ -65,7 +66,7 @@ public class FeignReturnValueWebMvcConfigurer implements BeanFactoryAware, Initi
             throw new IllegalStateException("Annotation ArgumentResolver add fail");
         }
 
-        //通过反射调用WebMvcConfigurationSupport方法的操作不用担心会消失，因为这几个接口都是 protected 的，所以他们是作为扩展接口来提供的
+        // 通过反射调用WebMvcConfigurationSupport方法的操作不用担心会消失，因为这几个接口都是 protected 的，所以他们是作为扩展接口来提供的
     }
 
 

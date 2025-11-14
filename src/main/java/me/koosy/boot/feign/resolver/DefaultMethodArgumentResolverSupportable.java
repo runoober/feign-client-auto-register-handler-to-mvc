@@ -7,14 +7,15 @@ public interface DefaultMethodArgumentResolverSupportable {
 
     default boolean supportsParameter(MethodParameter parameter, Supportable able) {
         MethodParameter originalMethod = ClassUtil.getFeignInterfaceMethodParameter(parameter);
-        if (originalMethod == null)
+        if (originalMethod == null) {
             return false;
+        }
         return able.support(originalMethod);
     }
 
     @FunctionalInterface
     interface Supportable {
-        boolean support(MethodParameter parameter) ;
+        boolean support(MethodParameter parameter);
     }
 
 }

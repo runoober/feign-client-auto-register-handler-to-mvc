@@ -20,12 +20,13 @@ public class FeignAutoHandlerRegisterConfiguration implements ImportBeanDefiniti
         Map<String, Object> defaultAttrs = metadata
                 .getAnnotationAttributes(EnableFeignAutoHandlerRegister.class.getName(), true);
 
-        if (defaultAttrs == null || (!defaultAttrs.containsKey("value") && !defaultAttrs.containsKey("basePackages")))
+        if (defaultAttrs == null || (!defaultAttrs.containsKey("value") && !defaultAttrs.containsKey("basePackages"))) {
             throw new IllegalArgumentException("basePackages not found");
+        }
 
-        //获取扫描包路径
+        // 获取扫描包路径
         Set<String> basePackages = getBasePackages(metadata);
-        //生成BeanDefinition并注册到容器中
+        // 生成BeanDefinition并注册到容器中
         BeanDefinitionBuilder mappingBuilder = BeanDefinitionBuilder
                 .genericBeanDefinition(FeignAutoHandlerRegisterHandlerMapping.class);
         mappingBuilder.addConstructorArgValue(basePackages);
